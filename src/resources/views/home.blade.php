@@ -33,13 +33,12 @@
     <section id="home" class="pt-20 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 animate__animated animate__fadeIn">
         <div class="md:col-span-2 glass p-10 rounded-[3rem] shadow-xl border-b-8 border-pink-200 flex flex-col md:flex-row gap-8 items-center justify-center">
             <div class="w-48 h-60 flex-shrink-0 rounded-[2.5rem] overflow-hidden border-4 border-white shadow-lg bg-white">
-                <img src="{{ asset('images/potoAdel.jpeg') }}" alt="Adellita" class="w-full h-full object-cover">
+                <img src="{{ $profile && $profile->avatar ? asset('storage/' . $profile->avatar) : 'https://placehold.co/400x500/FFF0F5/DB7093?text=No+Image' }}" alt="Adellita" class="w-full h-full object-cover">
             </div>
             <div class="flex-1 text-center md:text-left">
-                <h1 class="text-5xl font-black text-gray-800 leading-tight">Hi, I'm <span class="text-pink-500">Adellita!</span> 👋</h1>
+                <h1 class="text-5xl font-black text-gray-800 leading-tight">Hi, I'm <span class="text-pink-500">{{ $profile->name ?? 'Belum Diisi' }}</span> 👋</h1>
                 <p class="mt-6 text-xl text-gray-600 leading-relaxed">
-                    Mahasiswa <span class="font-bold text-blue-500">Sistem Informasi</span> di Universitas Esa Unggul. 
-                    Tertarik dengan desain <span class="bg-blue-100 px-2 rounded">ERP</span> dan <span class="bg-purple-100 px-2 rounded text-sm">UI/UX</span>.
+                    {{ $profile->title ?? 'Silakan atur judul utama Anda melalui halaman admin Filament.' }}
                 </p>
             </div>
         </div>
@@ -47,8 +46,7 @@
         <div id="about" class="glass p-8 rounded-[3rem] shadow-xl border-b-8 border-yellow-200 flex flex-col justify-center scroll-mt-28">
             <h2 class="text-2xl font-extrabold text-gray-700 mb-4">About Me 🎀</h2>
             <div class="text-gray-600 leading-relaxed text-sm">
-                <p class="mb-4">Halo! Saya <span class="font-bold text-pink-500">Adellita Meliana Putri</span>, Mahasiswa Sistem Informasi Semester 4.</p>
-                <p>Saya senang mengeksplorasi hal baru guna menciptakan solusi teknologi yang <span class="italic font-medium text-gray-800">creative</span> dan <span class="italic font-medium text-gray-800">user-friendly</span>.</p>
+                <p class="whitespace-pre-line">{{ $profile->bio ?? 'Tuliskan deskripsi profil Anda di panel admin Filament.' }}</p>
             </div>
         </div>
     </section>
@@ -63,21 +61,22 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($projects as $item)
             <div x-data="{ open: false }">
-                <div @click="open = true" class="cursor-pointer glass p-8 rounded-[3rem] shadow-xl border-b-8 border-blue-200 hover:-translate-y-3 transition-all duration-300 group h-full">
-                    
-                    @if($item->image)
-                    <div class="w-full h-48 rounded-2xl overflow-hidden mb-6 border-2 border-white shadow-inner bg-white">
-                        <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <div @click="open = true" class="cursor-pointer glass p-8 rounded-[3rem] shadow-xl border-b-8 border-blue-200 hover:-translate-y-3 transition-all duration-300 group h-full flex flex-col justify-between">
+                    <div>
+                        @if($item->image)
+                        <div class="w-full h-48 rounded-2xl overflow-hidden mb-6 border-2 border-white shadow-inner bg-white">
+                            <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        @endif
+
+                        <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest 
+                            {{ $item->status == 'Completed' ? 'bg-green-100 text-green-600' : ($item->status == 'In Progress' ? 'bg-yellow-100 text-yellow-600' : 'bg-gray-100 text-gray-600') }}">
+                            {{ $item->status }}
+                        </span>
+
+                        <h3 class="font-bold text-xl text-gray-800 mt-4">{{ $item->title }}</h3>
+                        <p class="text-sm text-gray-600 mt-3 leading-relaxed">{{ Str::limit($item->description, 80) }}</p>
                     </div>
-                    @endif
-
-                    <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest 
-                        {{ $item->status == 'Completed' ? 'bg-green-100 text-green-600' : ($item->status == 'In Progress' ? 'bg-yellow-100 text-yellow-600' : 'bg-gray-100 text-gray-600') }}">
-                        {{ $item->status }}
-                    </span>
-
-                    <h3 class="font-bold text-xl text-gray-800 mt-4">{{ $item->title }}</h3>
-                    <p class="text-sm text-gray-600 mt-3 leading-relaxed">{{ Str::limit($item->description, 80) }}</p>
                     
                     <div class="mt-6 flex flex-wrap gap-2">
                         @foreach(explode(',', $item->tags) as $tag)
@@ -101,7 +100,7 @@
                             <div class="space-y-6">
                                 <div>
                                     <h4 class="font-bold text-pink-500 uppercase text-xs tracking-tighter mb-2">Analisis Masalah</h4>
-                                    <p class="text-sm text-gray-600 leading-relaxed bg-pink-50/30 p-4 rounded-2xl">{{ $item->problem_analysis ?? 'Data analisis belum diisi.' }}</p>
+                                    <p class="text-sm text-gray-600 leading-relaxed bg-pink-50/30 p-4 rounded-2xl whitespace-pre-line">{{ $item->problem_analysis ?? 'Data analisis belum diisi.' }}</p>
                                 </div>
                                 <div>
                                     <h4 class="font-bold text-blue-500 uppercase text-xs tracking-tighter mb-2">Tech Stack</h4>
@@ -112,13 +111,13 @@
                             <div class="space-y-6">
                                 <h4 class="font-bold text-purple-500 uppercase text-xs tracking-tighter">ERD & Flowchart</h4>
                                 @if($item->erd_image)
-                                    <div class="rounded-2xl overflow-hidden border-2 border-gray-100 mb-4">
-                                        <img src="{{ asset('storage/' . $item->erd_image) }}" class="w-full object-contain">
+                                    <div class="rounded-2xl overflow-hidden border-2 border-gray-100 mb-4 bg-gray-50 p-2">
+                                        <img src="{{ asset('storage/' . $item->erd_image) }}" class="w-full object-contain max-h-60 mx-auto">
                                     </div>
                                 @endif
                                 @if($item->flowchart_image)
-                                    <div class="rounded-2xl overflow-hidden border-2 border-gray-100">
-                                        <img src="{{ asset('storage/' . $item->flowchart_image) }}" class="w-full object-contain">
+                                    <div class="rounded-2xl overflow-hidden border-2 border-gray-100 bg-gray-50 p-2">
+                                        <img src="{{ asset('storage/' . $item->flowchart_image) }}" class="w-full object-contain max-h-60 mx-auto">
                                     </div>
                                 @endif
                                 @if(!$item->erd_image && !$item->flowchart_image)
@@ -137,22 +136,27 @@
         <div class="glass p-12 rounded-[3rem] shadow-xl border-b-8 border-cyan-200 text-center">
             <h2 class="text-3xl font-black text-gray-800 mb-8 italic">Let's Connect! ✨</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <a href="mailto:adellitaworks@gmail.com" class="flex items-center justify-center gap-4 p-4 rounded-full bg-gradient-to-r from-blue-100 to-cyan-100 hover:shadow-lg transition-all group">
+                
+                <a href="{{ $profile && $profile->email ? 'mailto:' . $profile->email : 'javascript:void(0)' }}" class="flex items-center justify-center gap-4 p-4 rounded-full bg-gradient-to-r from-blue-100 to-cyan-100 hover:shadow-lg transition-all group">
                     <span class="text-2xl group-hover:scale-110 transition-transform">✉️</span>
                     <span class="font-black text-gray-700 text-sm">Email Me</span>
                 </a>
-                <a href="https://github.com/adelittt" target="_blank" class="flex items-center justify-center gap-4 p-4 rounded-full bg-gradient-to-r from-gray-100 to-slate-200 hover:shadow-lg transition-all group">
+
+                <a href="{{ $profile->github ?? '#' }}" target="_blank" class="flex items-center justify-center gap-4 p-4 rounded-full bg-gradient-to-r from-gray-100 to-slate-200 hover:shadow-lg transition-all group">
                     <span class="text-2xl group-hover:scale-110 transition-transform">🐙</span>
                     <span class="font-black text-gray-700 text-sm">GitHub</span>
                 </a>
-                <a href="https://www.instagram.com/adelittt" target="_blank" class="flex items-center justify-center gap-4 p-4 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 hover:shadow-lg transition-all group">
+
+                <a href="{{ $profile->instagram ?? '#' }}" target="_blank" class="flex items-center justify-center gap-4 p-4 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 hover:shadow-lg transition-all group">
                     <span class="text-2xl group-hover:scale-110 transition-transform">📸</span>
                     <span class="font-black text-gray-700 text-sm">Instagram</span>
                 </a>
-                <a href="https://www.tiktok.com/@.adelit" target="_blank" class="flex items-center justify-center gap-4 p-4 rounded-full bg-gradient-to-r from-cyan-100 to-red-100 hover:shadow-lg transition-all group">
+
+                <a href="{{ $profile->tiktok ?? '#' }}" target="_blank" class="flex items-center justify-center gap-4 p-4 rounded-full bg-gradient-to-r from-cyan-100 to-red-100 hover:shadow-lg transition-all group">
                     <span class="text-2xl group-hover:scale-110 transition-transform">🎵</span>
                     <span class="font-black text-gray-700 text-sm">TikTok</span>
                 </a>
+
             </div>
             <p class="mt-12 text-gray-400 text-xs tracking-widest uppercase italic">Made with Love & Laravel for Adellita</p>
         </div>
