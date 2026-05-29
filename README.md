@@ -1,6 +1,6 @@
 # 🎨 Portodelit - Personal Portfolio Website with Filament DCM
 
-Portodelit adalah sebuah platform website portofolio pribadi yang responsif dan sepenuhnya dinamis berbasis **DCM (Dynamic Content Management)**. Website ini dirancang untuk mengelola dan menampilkan biodata utama, informasi profil, tautan media sosial, serta galeri proyek teknis secara *real-time* langsung melalui panel admin.
+Portodelit adalah sebuah platform website portofolio pribadi yang responsif dan sepenuhnya dinamis berbasis. Website ini dirancang untuk mengelola dan menampilkan biodata utama, informasi profil, tautan media sosial, serta galeri proyek teknis secara *real-time* langsung melalui panel admin.
 
 ---
 
