@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title')->default('Mahasiswa Sistem Informasi');
             $table->text('bio');
             $table->string('avatar')->nullable(); // Untuk foto profil kamu
-            
+
             // Section Contact & Sosmed
             $table->string('email')->nullable();
             $table->string('github')->nullable();

@@ -28,7 +28,7 @@ class ProjectResource extends Resource
                                 Forms\Components\TextInput::make('title')
                                     ->required()
                                     ->label('Nama Project'),
-                                
+
                                 Forms\Components\Select::make('status')
                                     ->options([
                                         'Planned' => 'Planned 📅',
@@ -41,7 +41,7 @@ class ProjectResource extends Resource
                                 Forms\Components\Textarea::make('description')
                                     ->required()
                                     ->rows(3),
-                                    
+
                                 Forms\Components\TextInput::make('tags')
                                     ->placeholder('Contoh: Java, Laravel, ERP'),
                             ]),
@@ -54,7 +54,7 @@ class ProjectResource extends Resource
                                     ->label('Analisis Masalah')
                                     ->rows(5)
                                     ->placeholder('Jelaskan masalah yang diselesaikan proyek ini...'),
-                                
+
                                 Forms\Components\TextInput::make('tech_stack')
                                     ->label('Tech Stack')
                                     ->placeholder('Contoh: PHP, Tailwind, MariaDB'),
@@ -78,7 +78,7 @@ class ProjectResource extends Resource
                                     ->label('Upload ERD')
                                     ->image()
                                     ->directory('projects/diagrams'),
-                                
+
                                 Forms\Components\FileUpload::make('flowchart_image')
                                     ->label('Upload Flowchart')
                                     ->image()
@@ -95,7 +95,7 @@ class ProjectResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('image')
                     ->circular(),
-                
+
                 Tables\Columns\TextColumn::make('title')
                     ->searchable()
                     ->sortable()

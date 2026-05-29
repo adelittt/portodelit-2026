@@ -3,12 +3,15 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\ContactMessage; // Pastikan model ini sudah dibuat atau buat nanti
+
+ // Pastikan model ini sudah dibuat atau buat nanti
 
 class ContactForm extends Component
 {
     // 1. Deklarasi variabel harus di luar fungsi
-    public $name, $email, $message;
+    public $name;
+    public $email;
+    public $message;
     public $successMessage;
 
     // 2. Aturan validasi
@@ -23,8 +26,8 @@ class ContactForm extends Component
         $this->validate();
 
         // Logika simpan data atau kirim email di sini
-        $this->successMessage = "Terima kasih, pesan kamu sudah terkirim!";
-        
+        $this->successMessage = 'Terima kasih, pesan kamu sudah terkirim!';
+
         // Reset input agar form kosong kembali
         $this->reset(['name', 'email', 'message']);
     }

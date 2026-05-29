@@ -1,9 +1,9 @@
 <?php
 
+use App\Models\Profile;
+use App\Models\Project;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
-use App\Models\Project;
-use App\Models\Profile;
 
 /* NOTE: Do Not Remove
 / Livewire asset handling if using sub folder in domain

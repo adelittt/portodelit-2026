@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         // Gunakan pengecekan if di awal agar tidak mencoba membuat kolom yang sudah ada
-        if (!Schema::hasColumn('projects', 'problem_analysis')) {
+        if (! Schema::hasColumn('projects', 'problem_analysis')) {
             Schema::table('projects', function (Blueprint $table) {
                 $table->text('problem_analysis')->nullable();
                 $table->text('system_requirements')->nullable();
@@ -31,12 +31,12 @@ return new class extends Migration
     {
         Schema::table('projects', function (Blueprint $table) {
             $table->dropColumn([
-                'problem_analysis', 
-                'system_requirements', 
-                'architecture', 
-                'tech_stack', 
-                'erd_image', 
-                'flowchart_image'
+                'problem_analysis',
+                'system_requirements',
+                'architecture',
+                'tech_stack',
+                'erd_image',
+                'flowchart_image',
             ]);
         });
     }
