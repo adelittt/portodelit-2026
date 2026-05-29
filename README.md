@@ -87,6 +87,14 @@ portodelit/
 
 ---
 
+### 🧹 Code Quality & Formatting
+
+Proyek ini menggunakan alat otomatis untuk menjaga konsistensi gaya kode (*Coding Style Standard*):
+
+- **Menjalankan PHP Linter & Formatter (Laravel Pint)**:
+  ```bash
+  docker compose exec php ./vendor/bin/pint
+
 ## 🚀 Cara Instalasi & Menjalankan Project
 
 Pastikan Anda sudah menginstal **Docker** dan **Docker Compose** di komputer Anda (sangat direkomendasikan menggunakan WSL 2 untuk pengguna Windows).
@@ -95,3 +103,23 @@ Pastikan Anda sudah menginstal **Docker** dan **Docker Compose** di komputer And
    ```bash
    git clone [https://github.com/username/portodelit.git](https://github.com/username/portodelit.git)
    cd portodelit
+
+   ## 🎨 Langkah 2: Integrasi Prettier + Tailwind Plugin (Frontend/Blade)
+
+Biar susunan kode HTML/Blade di file `home.blade.php` kamu tetap rapi, dan susunan *class-class* Tailwind CSS kamu berurutan otomatis sesuai standar dokumentasi Tailwind, kita pasang Prettier di lokal laptop kamu.
+
+### 1. Install Extension VS Code (Sekali Saja)
+1. Buka menu **Extensions** di VS Code kamu (`Ctrl+Shift+X`).
+2. Cari dan install extension bernama: **Prettier - Code formatter** oleh *Prettier*.
+
+### 2. Buat File Konfigurasi di Root Proyek
+Buat file baru di root folder proyek kamu (sejajar dengan `README.md` dan `docker-compose.yml`) bernama **`.prettierrc`**, lalu isi dengan konfigurasi ini:
+
+```json
+{
+  "semi": true,
+  "singleQuote": true,
+  "tabWidth": 4,
+  "trailingComma": "es5",
+  "printWidth": 120
+}
